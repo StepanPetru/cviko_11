@@ -1,38 +1,41 @@
 import random
+import matplotlib.pyplot as plt
+
 
 def random_numbers(count, low=0, high=100):
     return [random.randint(low, high) for _ in range(count)]
 
 
-def selection_sort(numbers):
+def bubble_sort(numbers):
     numbers = numbers.copy()
-
     n = len(numbers)
 
+    plt.ion()
+    plt.show()
+
     for i in range(n):
-        min_index = i
+        for j in range(0, n - i - 1):
 
-        for j in range(i + 1, n):
-            if numbers[j] < numbers[min_index]:
-                min_index = j
+            if numbers[j] > numbers[j + 1]:
+                numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
 
-        temp = numbers[i]
-        numbers[i] = numbers[min_index]
-        numbers[min_index] = temp
+            colors = ["steelblue"] * len(numbers)
+            colors[j] = "tomato"
+            colors[j + 1] = "tomato"
+
+            plt.clf()
+            plt.bar(range(len(numbers)), numbers, color=colors)
+            plt.title("Bubble Sort")
+            plt.pause(0.1)
+
+    plt.ioff()
+    plt.show()
 
     return numbers
 
 
 def main():
-    seznam = [5, 1, 4, 2, 8]
-    print("puvodni:", seznam)
-    print("serazeny:", selection_sort(seznam))
-
-    nahodny = random_numbers(20)
-    print("nahodny:", nahodny)
-    print("serazeny nahodny:", selection_sort(nahodny))
-
-
+    bubble_sort(random_numbers(10))
 
 
 if __name__ == "__main__":
